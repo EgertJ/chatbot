@@ -8,7 +8,7 @@ import { useChat } from "ai/react";
 
 import { SendIcon, SpeakerIcon } from "./icons";
 const ChatBox: React.FC = () => {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
     useChat();
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -88,6 +88,13 @@ const ChatBox: React.FC = () => {
         size={12}
       >
         <div className="flex flex-col space-y-4">{renderedMessages}</div>
+        {error && (
+          <div className="text-red-500">
+            {" "}
+            Tekkis viga, proovige uuesti:
+            {error.message}
+          </div>
+        )}
       </ScrollShadow>
       <form
         className="p-4  border-gray-200 flex items-center gap-6"

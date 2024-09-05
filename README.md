@@ -1,52 +1,32 @@
-# Next.js & NextUI Template
+# About
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
+Chat-kasutajaliides tehtud NextJS ja Vercel AI SDK-ga.
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
+## QA
 
-## Technologies Used
+### Kirjelda koodi struktuuri ja miks oled just sellised valikud teinud?
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+Koodi põhiosa on /app kaustas, kus on kood. See on selleks, et eraldada konfiguratsiooni, ning teisi faile ja lehe enda koodi. Samuti nõuab seda NextJS. ReactJS komponendid on eraldi kaustas /app/components, et koodi paremini organiseerida.
 
-## How to Use
+### Kirjelda, kuidas sinu loodud chat-kasutajaliideses on tagatud kasutajasõbralikkus?
 
-### Use the template with create-next-app
+Kasutajasõbralikkus on tagatud mitme elemendiga. Esiteks on chat-kasutajaliideses ära eraldatud kasutaja poolt sisestatud jutt ja roboti vastused (roboti vastused halliga vasakul ja enda küsimused sinisega paremal). Samuti on iga sõnumi juurde märgitud kes ja mis ajal saatis sõnumi, et vajadusel saaks kasutaja seda jälgida. Uue sõnumi tulekul keritakse chati lõppu, et kasutaja ei peaks terve chati uuesti läbi kerima. Tekstiaken ja saatmisnupp on disabled, kui robot vastab, et ei saaks tekkida segadust. Samuti on tagatud juurdepääsetavus, kasutadades aria-labele'id ja aria-live elemente. Juturoboti vastuste all on ka nupp, millele vajutades saab kuulda roboti vastust. Vea tekkel, näidatakse kasutajale viga ja soovitatakse uuesti proovida.
 
-To create a new project based on this template using `create-next-app`, run the following command:
+### Miks kasutad sellist värviskeemi ja tüpograafiat?
 
-```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
-```
+Värvi valisin sellise, mis sobituks nii heleda, kui ka tumeda teemaga. Tüpograafia sai valitud Inter, kuna see ongi mõeldud kasutajaliidese tegemisteks, ning on hästi loetav iga ekrrani suurusega.
 
-### Install dependencies
+### Miks kasutad just seda disaini lähenemist (puhas CSS või Tailwind või Bootstrap või Material või muu lähenemine, mida eelistad)?
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+Kasutan Tailwind CSS ja NextUI lahendusi. Tailwind CSS kasutan, kuna see teeb arendusprotsessi palju kiiremaks ja lihtsamaks, ning hoiab ühtset stiili. NextUI võtsin kasutusele, kuna soovisin ilusaid, animeeritud elemente, millele ei pea ise aega kulutama. Samuti saab elemente ka enda soovi järgi kujundada.
 
-```bash
-npm install
-```
+### Kuidas testiksid automaatselt antud rakendust (võid lisada ka testi, kuid see pole kohustuslik)?
 
-### Run the development server
+Kasutaksin Seleniumit või Cypressi kasutajaliidese testimiseks. Testiks eraldi, kas kõik peamised elemendid on olemas, ning kas töötavad korrektselt.
 
-```bash
-npm run dev
-```
+### Millised ohud ja riskid on seotud näidisrakendusega ning mida teeksid nende maandamiseks?
 
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
-
-```bash
-public-hoist-pattern[]=*@nextui-org/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+Kindlasti on üks ohtudest see, kui mingi bot kasutab näidisrakendust ja koormab selle üle, või spämmib seda pidevalt. Selle maandamiseks oleks vaja implementeerida rate-limiting, mis piiraks spämmimist. Kui lisada rakendusele ka andmebaas sõnumite hoiustamiseks, siis tuleks ka valideerida kasutaja sisendeid.
 
 ## License
 
