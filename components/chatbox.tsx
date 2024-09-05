@@ -12,6 +12,7 @@ const ChatBox: React.FC = () => {
     useChat();
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  //Speak bot message
   const speakMessage = (text: string) => {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(text);
@@ -19,6 +20,7 @@ const ChatBox: React.FC = () => {
     }
   };
 
+  //Scroll to bottom after new message
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTo({
@@ -28,6 +30,7 @@ const ChatBox: React.FC = () => {
     }
   }, [messages]);
 
+  //Message list
   const renderedMessages = useMemo(() => {
     return messages.map((message, index) => (
       <article key={index} className="flex flex-col space-y-2">

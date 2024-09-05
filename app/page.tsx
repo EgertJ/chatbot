@@ -14,6 +14,7 @@ export default function Home() {
             <p className="text-xs text-white">Sinu personaalne assistent</p>
           </div>
         </div>
+        {/* Suspense incase chatbox loads slow. */}
         <Suspense fallback={<div>Laen jutukasti...</div>}>
           <ChatBox />
         </Suspense>
