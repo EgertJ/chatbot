@@ -8,25 +8,29 @@ import { useChat } from "ai/react";
 
 import { SendIcon, SpeakerIcon } from "./icons";
 const ChatBox: React.FC = () => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat();
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const speakMessage = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    speechSynthesis.speak(utterance);
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
   };
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages]);
 
   const renderedMessages = useMemo(() => {
     return messages.map((message, index) => (
-      <div key={index} className="flex flex-col space-y-2">
+      <article key={index} className="flex flex-col space-y-2">
         <div
           className={`text-sm text-gray-500 flex items-center ${
             message.role === "user" ? "justify-end" : "justify-start"
@@ -70,7 +74,7 @@ const ChatBox: React.FC = () => {
             </Button>
           </div>
         )}
-      </div>
+      </article>
     ));
   }, [messages]);
 
@@ -79,7 +83,6 @@ const ChatBox: React.FC = () => {
       <ScrollShadow
         ref={chatContainerRef}
         aria-label="Suhtlusaken"
-        aria-live="polite"
         className="flex-grow p-4 bg-white pt-10 pb-10 h-[200px]"
         role="region"
         size={12}
@@ -87,7 +90,7 @@ const ChatBox: React.FC = () => {
         <div className="flex flex-col space-y-4">{renderedMessages}</div>
       </ScrollShadow>
       <form
-        className="p-4 border-t border-gray-200 flex items-center gap-6"
+        className="p-4  border-gray-200 flex items-center gap-6"
         onSubmit={handleSubmit}
       >
         <Textarea
@@ -99,13 +102,15 @@ const ChatBox: React.FC = () => {
           placeholder="Sisesta sõnum..."
           value={input}
           onChange={handleInputChange}
+          disabled={isLoading}
         />
         <Button
           isIconOnly
-          aria-label="Send message"
+          aria-label="Saada sõnum"
           className="bg-white"
           size="lg"
           type="submit"
+          disabled={isLoading}
         >
           <SendIcon />
         </Button>

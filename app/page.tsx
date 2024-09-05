@@ -8,7 +8,7 @@ export default function Home() {
     <section className="flex flex-col min-h-screen max-h-10 p-10 rounded-lg ">
       <div className="flex flex-col flex-grow bg-primary rounded-lg shadow-md">
         <div className="flex items-center gap-3 p-4  border-gray-200">
-          <Avatar src="/bot-image.jpg" />
+          <Avatar src="/bot-image.jpg" alt="Juturoboti pilt" />
           <div className="flex flex-col gap-1">
             <p className="font-semibold text-white">Juturobot</p>
             <p className="text-xs text-white">Sinu personaalne assistent</p>
